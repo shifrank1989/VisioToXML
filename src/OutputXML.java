@@ -49,18 +49,18 @@ public class OutputXML {
         //Element processElement_chil=new Element("processElement_chil");
         //Element processLine_chil=new Element("processLine_chil");
         //获取范围框四角坐标
-        for(int i = 0; i < xList.size(); i++){ 
+        /*for(int i = 0; i < xList.size(); i++){ 
         	Map<String, Object> map = (Map<String, Object>) xList.get(i);
         	Set<String> set = map.keySet();
         	List<String> keyList = new ArrayList<String>();
         	keyList.addAll(set);
-        	/*//测试
+        	//测试
         	if(map.get("ID").equals("8")){
         		System.out.println("8的downy："+map.get("DownY"));
         	}
         	if(map.get("ID").equals("10")){
         		System.out.println("10的upy："+map.get("UpY"));
-        	}*/
+        	}
         	//
         	try {
         		if(map.get("Width").equals(Range_width)&&map.get("Height").equals(Range_heigh)){
@@ -73,7 +73,7 @@ public class OutputXML {
 				// TODO: handle exception
 			}
         	
-        }
+        }*/
         //获取范围内所有ID
        // List ProcessElement_list_id=ProcessElement(xList, Range_Left_X, Range_Righ_X, Range_Up_Y, Range_Dw_Y);
         //for(int j = 0; j < ProcessElement_list_id.size(); j++){
@@ -290,9 +290,9 @@ public class OutputXML {
                 	String arrow_direction;
                 	if(map.get(String.valueOf(point_number-1)+"X").toString().equals(map.get(String.valueOf(point_number)+"X").toString())){
                 		if(Double.valueOf(map.get(String.valueOf(point_number-1)+"Y").toString()).compareTo(Double.valueOf(map.get(String.valueOf(point_number)+"Y").toString()))<0){
-                			arrow_direction="up";
-                		}else{
                 			arrow_direction="down";
+                		}else{
+                			arrow_direction="up";
                 		}
                 	}else {
                 		if(Double.valueOf(map.get(String.valueOf(point_number-1)+"X").toString()).compareTo(Double.valueOf(map.get(String.valueOf(point_number)+"X").toString()))<0){

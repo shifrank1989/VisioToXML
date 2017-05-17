@@ -75,7 +75,7 @@ public class ReadXML {
 							  if(NN.equals("PinY")){
 								  //System.out.println("PinY:"+VV);
 								  Double piny_temp=Double.parseDouble(VV)*96-y;
-								  aMap.put("PinY", piny_temp);
+								  aMap.put("PinY", -1*piny_temp+1100);
 							  }
 							  if(NN.equals("Width")){
 								  //System.out.println("Width:"+VV);
@@ -96,7 +96,7 @@ public class ReadXML {
 							  if(NN.equals("BeginY")){
 								  //System.out.println("BeginY:"+VV);
 								  Double BeginY_temp=Double.parseDouble(VV)*96-y;
-								  aMap.put("BeginY", BeginY_temp);
+								  aMap.put("BeginY", -1*BeginY_temp+1100);
 							  }
 							  if(NN.equals("EndX")){
 								  //System.out.println("EndX:"+VV);
@@ -106,26 +106,26 @@ public class ReadXML {
 							  if(NN.equals("EndY")){
 								 // System.out.println("EndY:"+VV);
 								  Double EndY_temp=Double.parseDouble(VV)*96-y;
-								  aMap.put("EndY", EndY_temp);
+								  aMap.put("EndY", -1*EndY_temp+1100);
 							  }
 							  if(NN.equals("TxtPinY")){
 								  //System.out.println("BeginY:"+VV);
 								 Double TxtPinY_temp=0.0;
 								  if(aMap.containsKey("BeginY")){
-									  TxtPinY_temp=Double.parseDouble(VV)*96+Double.valueOf(aMap.get("BeginY").toString());
+									  TxtPinY_temp=Double.parseDouble(VV)*96-y+Double.valueOf(aMap.get("BeginY").toString());
 								  }else {
-									  TxtPinY_temp=Double.parseDouble(VV)*96;
+									  TxtPinY_temp=Double.parseDouble(VV)*96-y;
 								}
 								  //Double TxtPinY_temp=Double.parseDouble(VV)*96+Double.valueOf(aMap.get("BeginY").toString());
-								  aMap.put("TxtPinY", TxtPinY_temp);
+								  aMap.put("TxtPinY", -1*TxtPinY_temp+1100);
 							  }
 							  if(NN.equals("TxtPinX")){
 								  //System.out.println("BeginY:"+VV);
 								  Double TxtPinX_temp=0.0;
 								  if(aMap.containsKey("BeginX")){
-									  TxtPinX_temp=Double.parseDouble(VV)*96+Double.valueOf(aMap.get("BeginX").toString());
+									  TxtPinX_temp=Double.parseDouble(VV)*96-x+Double.valueOf(aMap.get("BeginX").toString());
 								  }else {
-									  TxtPinX_temp=Double.parseDouble(VV)*96;
+									  TxtPinX_temp=Double.parseDouble(VV)*96-x;
 								}
 								  //Double TxtPinX_temp=Double.parseDouble(VV)*96+Double.valueOf(aMap.get("BeginX").toString());
 								  aMap.put("TxtPinX", TxtPinX_temp);
@@ -217,8 +217,8 @@ public class ReadXML {
 										  double VV=0.0;
 										  if(NNN.equals("X")&&aMap.containsKey("BeginX")){
 											  VV=V+Double.valueOf(aMap.get("BeginX").toString());
-										  }else if(NNN.equals("X")&&aMap.containsKey("BeginY")){
-											 VV=V+Double.valueOf(aMap.get("BeginY").toString());
+										  }else if(NNN.equals("Y")&&aMap.containsKey("BeginY")){
+											 VV=-1*(V+Double.valueOf(aMap.get("BeginY").toString()))+1100;
 										}else {
 											VV=V;
 										}
@@ -248,10 +248,10 @@ public class ReadXML {
 						     //Double height_temp=Double.parseDouble(aMap.get("Height").toString());
 					 // System.out.println("222");
 						     Double piny_temp=Double.parseDouble(aMap.get("PinY").toString());
-						     float up =(float)(piny_temp+height_temp/2);
-						     float down =(float)(piny_temp-height_temp/2);
-								  aMap.put("UpY",String.valueOf(up));
-								  aMap.put("DownY", String.valueOf(down));
+						     float up =(float)(piny_temp-height_temp/2);
+						     float down =(float)(piny_temp+height_temp/2);
+								  aMap.put("UpY",String.valueOf(-1*up+1100));
+								  aMap.put("DownY", String.valueOf(-1*down+1100));
 					  xmllist.add(aMap);
 				  }
 				  
