@@ -21,8 +21,8 @@ public class OutputXML {
     	shapes.add("property");  
     	shapes.add("Text");      	  
     }  */ 
-	String in="E://page8.xml";
-	String out="E:\\page8OUT_sc.xml";
+	String in="E://page7.xml";
+	String out="E:\\page7OUT_sc.xml";
 	String temp_ele="shape";
     public void BuildXML(){  
         String Range_width="6.889763779527552";
@@ -140,6 +140,10 @@ public class OutputXML {
                 	String DownY_0=map.get("DownY").toString();
                 	Double pinx_temp_0=Double.parseDouble(map.get("PinX").toString());
                 	Double piny_temp_0=Double.parseDouble(map.get("PinY").toString());
+                	Double Width_temp_0=Double.parseDouble(map.get("Width").toString());
+                	Double Heigh_temp_0=Double.parseDouble(map.get("Height").toString());
+                	Double Heigh_temp_1=0.0;
+                	Double Heigh_temp_2=0.0;
                 	Double pinx_temp_1=0.0;
                 	Double pinx_temp_2=0.0;
                 	Double piny_temp_1=0.0;
@@ -174,6 +178,7 @@ public class OutputXML {
                         	}
                     		pinx_temp_1=Double.parseDouble(map_temp.get("PinX").toString());
                     		piny_temp_1=Double.parseDouble(map_temp.get("PinY").toString());
+                    		Heigh_temp_1=Double.parseDouble(map_temp.get("Height").toString());
                     		String DownY_1=map_temp.get("DownY").toString(); 
                     		work=map_temp.get("Text").toString();
                     		for(int f = 0; f < xList.size(); f++){ 
@@ -207,6 +212,7 @@ public class OutputXML {
                                 	}
                             		pinx_temp_2=Double.parseDouble(map_temp_2.get("PinX").toString());
                             		piny_temp_2=Double.parseDouble(map_temp_2.get("PinY").toString());
+                            		Heigh_temp_2=Double.parseDouble(map_temp_2.get("Height").toString());
                             		file=map_temp_2.get("Text").toString();
                             		
                             	}
@@ -214,8 +220,8 @@ public class OutputXML {
                     		}               		 
                     	}
                 	}
-                	double pinx=(pinx_temp_0+pinx_temp_1+pinx_temp_2)/Sum;
-                	double piny=(piny_temp_0+piny_temp_1+piny_temp_2)/Sum;
+                	double pinx=(pinx_temp_0+pinx_temp_1+pinx_temp_2)/Sum-Width_temp_0/2;
+                	double piny=(piny_temp_0+piny_temp_1+piny_temp_2)/Sum-(Heigh_temp_0+Heigh_temp_1+Heigh_temp_2)/2;
                 	
                 	processElement_chil.addContent(new Element("loc").setText(String.valueOf((int)pinx)+" "+String.valueOf((int)piny)));
                 	Element location = new Element("location");
@@ -246,6 +252,7 @@ public class OutputXML {
             	}
             	//root.addContent(processElement.detach());
             }
+        	//Á¬½ÓÏß
         	for(int i = 0; i < xList.size(); i++){        		
             	Map<String, Object> map = (Map<String, Object>) xList.get(i);
             	Set<String> set = map.keySet();
@@ -263,13 +270,45 @@ public class OutputXML {
                 	double BeginY=Double.parseDouble(map.get("BeginY").toString());
                 	double EndX=Double.parseDouble(map.get("EndX").toString());
                 	double EndY=Double.parseDouble(map.get("EndY").toString());
-                	Element loc=new Element("loc").setText(String.valueOf((int)BeginX)+","+String.valueOf((int)BeginY)+","+String.valueOf((int)EndX)+","+String.valueOf((int)EndY));
+                	int point_number=Integer.parseInt(map.get("line_point_number").toString());
+                	//StringBuffer loc_str = null;
+                	String loc_str_x;
+                	String loc_str_y;
+                	for(int j=0;j<point_number;j++){
+                		String temp_number=String.valueOf(j+1);
+                		loc_str_x=map.get(temp_number+"X").toString();
+                		loc_str_y=map.get(temp_number+"Y").toString();
+                		Element loc_x=new Element("loc").setText(loc_str_x.substring(0,loc_str_x.indexOf(".")));
+                		Element loc_y=new Element("loc").setText(loc_str_y.substring(0,loc_str_y.indexOf(".")));
+                		Element location_1=new Element("location");
+                    	location_1.addContent(new Element("position_x").setText(loc_str_x.substring(0,loc_str_x.indexOf("."))));
+                    	location_1.addContent(new Element("position_y").setText(loc_str_y.substring(0,loc_str_y.indexOf("."))));
+                		processLine_chil.addContent(loc_x);
+                		processLine_chil.addContent(loc_y);
+                		processLine_chil.addContent(location_1);
+                	}
+                	String arrow_direction;
+                	if(map.get(String.valueOf(point_number-1)+"X").toString().equals(map.get(String.valueOf(point_number)+"X").toString())){
+                		if(Double.valueOf(map.get(String.valueOf(point_number-1)+"Y").toString()).compareTo(Double.valueOf(map.get(String.valueOf(point_number)+"Y").toString()))<0){
+                			arrow_direction="up";
+                		}else{
+                			arrow_direction="down";
+                		}
+                	}else {
+                		if(Double.valueOf(map.get(String.valueOf(point_number-1)+"X").toString()).compareTo(Double.valueOf(map.get(String.valueOf(point_number)+"X").toString()))<0){
+                			arrow_direction="right";
+                		}else{
+                			arrow_direction="left";
+                		}
+					}
+                	
+                	/*Element loc=new Element("loc").setText(String.valueOf((int)BeginX)+","+String.valueOf((int)BeginY)+","+String.valueOf((int)EndX)+","+String.valueOf((int)EndY));
                 	Element location_1=new Element("location");
                 	location_1.addContent(new Element("position_x").setText(String.valueOf((int)BeginX)));
                 	location_1.addContent(new Element("position_y").setText(String.valueOf((int)BeginY)));
                 	Element location_2=new Element("location");
                 	location_2.addContent(new Element("position_x").setText(String.valueOf((int)EndX)));
-                	location_2.addContent(new Element("position_y").setText(String.valueOf((int)EndY)));
+                	location_2.addContent(new Element("position_y").setText(String.valueOf((int)EndY)));*/
                 	Element text=new Element("text");
                 	for(int j = 0; j < keyList.size(); j++){
                 		if(keyList.get(j).equals("Text")){
@@ -281,12 +320,12 @@ public class OutputXML {
                 	double TxtPinY=Double.parseDouble(map.get("PinY").toString())+Double.parseDouble(map.get("TxtPinY").toString());
                 	text.addContent(new Element("position_x").setText(String.valueOf((int)TxtPinX)));
                 	text.addContent(new Element("position_y").setText(String.valueOf((int)TxtPinY)));
-                	Element arrow_direction=new Element("arrow_direction").setText("hh");
-                	processLine_chil.addContent(loc);
-                	processLine_chil.addContent(location_1);
-                	processLine_chil.addContent(location_2);
+                	Element arrow_direction_t=new Element("arrow_direction").setText(arrow_direction);
+                	//processLine_chil.addContent(loc);
+                	//processLine_chil.addContent(location_1);
+                	//processLine_chil.addContent(location_2);
                 	processLine_chil.addContent(text);
-                	processLine_chil.addContent(arrow_direction);
+                	processLine_chil.addContent(arrow_direction_t);
                 	root.addContent(processLine_chil) ;              	
             	}
             	

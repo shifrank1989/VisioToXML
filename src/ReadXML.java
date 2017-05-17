@@ -17,8 +17,8 @@ import org.jdom2.input.SAXBuilder;
 import org.jdom2.output.XMLOutputter;
 
 public class ReadXML { 
-	int x=15500; //市场开发管理7000 采购方式评审 16000 费就无聊处理 14000 物资额定 9000
-	int y=11000;//25000 11000 14500 16500
+	int x=7000; //市场开发管理7000 采购方式评审 16000 费就无聊处理 14000 物资额定 9000 项目投标管理 15500
+	int y=25000;//25000 11000 14500 16500 11000
 	public List xmlData(String url){
         List<Map<String, Object>> xmllist = new ArrayList<Map<String, Object>>();		
 		File file1 = new File(url);
@@ -110,12 +110,24 @@ public class ReadXML {
 							  }
 							  if(NN.equals("TxtPinY")){
 								  //System.out.println("BeginY:"+VV);
-								  Double TxtPinY_temp=Double.parseDouble(VV)*96;
+								 Double TxtPinY_temp=0.0;
+								  if(aMap.containsKey("BeginY")){
+									  TxtPinY_temp=Double.parseDouble(VV)*96+Double.valueOf(aMap.get("BeginY").toString());
+								  }else {
+									  TxtPinY_temp=Double.parseDouble(VV)*96;
+								}
+								  //Double TxtPinY_temp=Double.parseDouble(VV)*96+Double.valueOf(aMap.get("BeginY").toString());
 								  aMap.put("TxtPinY", TxtPinY_temp);
 							  }
 							  if(NN.equals("TxtPinX")){
 								  //System.out.println("BeginY:"+VV);
-								  Double TxtPinX_temp=Double.parseDouble(VV)*96;
+								  Double TxtPinX_temp=0.0;
+								  if(aMap.containsKey("BeginX")){
+									  TxtPinX_temp=Double.parseDouble(VV)*96+Double.valueOf(aMap.get("BeginX").toString());
+								  }else {
+									  TxtPinX_temp=Double.parseDouble(VV)*96;
+								}
+								  //Double TxtPinX_temp=Double.parseDouble(VV)*96+Double.valueOf(aMap.get("BeginX").toString());
 								  aMap.put("TxtPinX", TxtPinX_temp);
 							  }
 							  if(NN.equals("LineColor")){
@@ -185,6 +197,7 @@ public class ReadXML {
 							  aMap.put("Relationships", R);
 						  }	*/
 						  if(Cell.getName().equals("Section")){
+							  int point_number=0;
 							  //System.out.println("Text:"+Cell.getText().trim());
 							  String NN=Cell.getAttributeValue("N");
 							  if(NN.equals("Geometry")){
@@ -200,13 +213,27 @@ public class ReadXML {
 										  String ix=Row.getAttributeValue("IX");
 										  String NNN=cell.getAttributeValue("N");
 										  String T=Row.getAttributeValue("T");
-										  String V=cell.getAttributeValue("V");
+										  double V=Double.valueOf(cell.getAttributeValue("V"))*96;
+										  double VV=0.0;
+										  if(NNN.equals("X")&&aMap.containsKey("BeginX")){
+											  VV=V+Double.valueOf(aMap.get("BeginX").toString());
+										  }else if(NNN.equals("X")&&aMap.containsKey("BeginY")){
+											 VV=V+Double.valueOf(aMap.get("BeginY").toString());
+										}else {
+											VV=V;
+										}
+										  //String V=cell.getAttributeValue("V");
 										  //System.out.println(T+NNN+V);
-										  aMap.put(T+NNN, V);
+										  point_number=Integer.parseInt(ix);
+										  aMap.put(ix+NNN, VV);
+										 // System.out.println(NNN+":"+V);
 									  }
 								  }
 								  //aMap.put("Section", Cell);
 								  }	
+							  aMap.put("line_point_number",point_number);//拐点个数
+							  
+							  //System.out.println("..........."+":"+aMap.get("ID")+"...."+point_number);
 						  }
 					  }
 					  //System.out.println(aMap.get("ID").toString());
