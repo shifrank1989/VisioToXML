@@ -22,8 +22,10 @@ public class Read {
 	String Shape_ID;
 	String UniqueID;
 	String Type;
-	int inch2px_ratio=96;
+	int inch2px_ratio=192;
 	int asix_move_artio=1100;
+	int mod_width=210;
+	int mod_heigh=56;
 	public List xmlData(String url){
         List<Map<String, Object>> xmllist = new ArrayList<Map<String, Object>>();		
 		File file1 = new File(url);
@@ -205,13 +207,15 @@ public class Read {
 								 String V=level_2_element.getAttributeValue("V");
 								 if(N.equals("PinX")){
 									  //System.out.println("PinX:"+VV);
-									  Double pinx_temp=Double.parseDouble(V)*inch2px_ratio;
+									  double pinx_temp=Double.parseDouble(V)*inch2px_ratio;
 									  Met_Map.put("PinX", pinx_temp);
+									  Met_Map.put("X_json", (int)(pinx_temp)-mod_width/2);
 								  }
 								  if(N.equals("PinY")){
 									  //System.out.println("PinY:"+VV);
-									  Double piny_temp=Double.parseDouble(V)*inch2px_ratio;
+									  double piny_temp=Double.parseDouble(V)*inch2px_ratio;
 									  Met_Map.put("PinY", -1*piny_temp+asix_move_artio);
+									  Met_Map.put("Y_json", (int)(-1*piny_temp+asix_move_artio)-mod_heigh/2);
 								  }
 								  if(N.equals("Width")){
 									  //System.out.println("Width:"+VV);
