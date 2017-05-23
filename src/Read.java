@@ -83,7 +83,8 @@ public class Read {
 									  if(N.equals("BeginY")){
 										  //System.out.println("PinX:"+VV);
 										  Double piny_temp=Double.parseDouble(V)*inch2px_ratio;
-										  Met_Map.put("BeginY", piny_temp);
+										  Met_Map.put("BeginY", -1*piny_temp+asix_move_artio);
+										  //Met_Map.put("BeginY", piny_temp);
 									  }
 									  if(N.equals("EndX")){
 										  //System.out.println("PinX:"+VV);
@@ -93,7 +94,8 @@ public class Read {
 									  if(N.equals("EndY")){
 										  //System.out.println("PinX:"+VV);
 										  Double piny_temp=Double.parseDouble(V)*inch2px_ratio;
-										  Met_Map.put("EndY", piny_temp);
+										  Met_Map.put("EndY", -1*piny_temp+asix_move_artio);
+										  //Met_Map.put("EndY", piny_temp);
 									  }
 									if(N.equals("BegTrigger")){
 										 String F = level_2_element.getAttributeValue("F");
@@ -238,7 +240,7 @@ public class Read {
 									List level_4_list=level_3_element.getChildren();
 									Met_Map.put(String.valueOf(child_number)+"childNameU", level_3_element.getAttributeValue("NameU"));
 									Met_Map.put(String.valueOf(child_number)+"childID", level_3_element.getAttributeValue("ID"));
-									System.out.println(Met_Map.get("ID")+"°üº¬:"+child_number+":"+level_3_element.getAttributeValue("ID"));
+									//System.out.println(Met_Map.get("ID")+"°üº¬:"+child_number+":"+level_3_element.getAttributeValue("ID"));
 									for(Iterator iter_4 = level_4_list.iterator(); iter_4.hasNext();){
 										
 										Element level_4_element=(Element)iter_4.next();
