@@ -19,8 +19,8 @@ import org.omg.CORBA.PUBLIC_MEMBER;
 
 public class OutXML {
 
-	String IN_url="E://page7.xml";
-	String OUT_url="E:\\page7OUT_sc.xml";
+	String IN_url="D://page2.xml";
+	String OUT_url="D:\\page2OUT_sc.xml";
 	String temp_ele="shape";
 	Map map_con=new HashMap();
 	public String get_category(String nameU){
