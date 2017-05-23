@@ -555,77 +555,70 @@ public class OutXML {
     }
     public double up_cen_x(Map map){
     	double up_cen_x=0.0;
-    	double pinx=Double.valueOf(map.get("PinX").toString());    	
-    	up_cen_x=pinx;  
-    	
+    	//double pinx=Double.valueOf(map.get("PinX").toString());    	
+    	//up_cen_x=pinx;  
+    	int temp_x_ul=Integer.valueOf(map.get("X_json").toString());
+    	up_cen_x=temp_x_ul+mod_width/2;
     	return up_cen_x;
     }
     public double up_cen_y(Map map){
-    	double up_cen_y=0.0;
-    	//double pinx=Double.valueOf(map.get("PinX").toString());
-    	double piny=Double.valueOf(map.get("PinY").toString());
-    	//double width=Double.valueOf(map.get("Width").toString());
-    	double heigh=Double.valueOf(map.get("Height").toString());
-    	//up_cen_y=piny-heigh/2;    	
-    	up_cen_y=piny-mod_heigh/2;
+    	double up_cen_y=0.0;   	
+    	//double piny=Double.valueOf(map.get("PinY").toString());   	
+    	//double heigh=Double.valueOf(map.get("Height").toString());    	   	
+    	//up_cen_y=piny-mod_heigh/2;
+    	int temp_y_ul=Integer.valueOf(map.get("Y_json").toString());
+    	up_cen_y=temp_y_ul;
     	return up_cen_y;
     }
     public double down_cen_x(Map map){
     	double down_cen_x=0.0;
-    	double pinx=Double.valueOf(map.get("PinX").toString());
-    	//double piny=Double.valueOf(map.get("PinY").toString());
-    	//double width=Double.valueOf(map.get("Width").toString());
-    	//double heigh=Double.valueOf(map.get("Height").toString());
-    	down_cen_x=pinx;    	
+    	//double pinx=Double.valueOf(map.get("PinX").toString());   	
+    	//down_cen_x=pinx;    
+    	int temp_x_ul=Integer.valueOf(map.get("X_json").toString());
+    	down_cen_x=temp_x_ul+mod_width/2;
     	return down_cen_x;
     }
     public double down_cen_y(Map map){
-    	double down_cen_y=0.0;
-    	//double pinx=Double.valueOf(map.get("PinX").toString());
-    	double piny=Double.valueOf(map.get("PinY").toString());
-    	//double width=Double.valueOf(map.get("Width").toString());
-    	double heigh=Double.valueOf(map.get("Height").toString());
-    	//down_cen_y=piny+heigh/2;    	
-    	down_cen_y=piny+mod_heigh/2;
+    	double down_cen_y=0.0;    	
+    	//double piny=Double.valueOf(map.get("PinY").toString());   	
+    	//double heigh=Double.valueOf(map.get("Height").toString());    	 	
+    	//down_cen_y=piny+mod_heigh/2;
+    	int temp_y_ul=Integer.valueOf(map.get("Y_json").toString());
+    	down_cen_y=temp_y_ul+mod_heigh;
     	return down_cen_y;
     }
     public double left_cen_x(Map map){
     	double left_cen_x=0.0;
-    	double pinx=Double.valueOf(map.get("PinX").toString());
-    	//double piny=Double.valueOf(map.get("PinY").toString());
-    	double width=Double.valueOf(map.get("Width").toString());
-    	//double heigh=Double.valueOf(map.get("Height").toString());
-    	//left_cen_x=pinx-width/2;    	
-    	left_cen_x=pinx-mod_width/2;
+    	//double pinx=Double.valueOf(map.get("PinX").toString());    	
+    	//double width=Double.valueOf(map.get("Width").toString());   	  	
+    	//left_cen_x=pinx-mod_width/2;
+    	int temp_x_ul=Integer.valueOf(map.get("X_json").toString());
+    	left_cen_x=temp_x_ul;
     	return left_cen_x;
     }
     public double left_cen_y(Map map){
-    	double left_cen_y=0.0;
-    	//double pinx=Double.valueOf(map.get("PinX").toString());
-    	double piny=Double.valueOf(map.get("PinY").toString());
-    	//double width=Double.valueOf(map.get("Width").toString());
-    	//double heigh=Double.valueOf(map.get("Height").toString());
-    	left_cen_y=piny;    	
+    	double left_cen_y=0.0;    	
+    	//double piny=Double.valueOf(map.get("PinY").toString());    	
+    	//left_cen_y=piny; 
+    	int temp_y_ul=Integer.valueOf(map.get("Y_json").toString());
+    	left_cen_y=temp_y_ul+mod_heigh/2;
     	return left_cen_y;
     }
     public double right_cen_x(Map map){
     	double right_cen_x=0.0;
-    	double pinx=Double.valueOf(map.get("PinX").toString());
-    	//double piny=Double.valueOf(map.get("PinY").toString());
-    	//System.out.println("id:"+map.get("ID"));
-    	double width=Double.valueOf(map.get("Width").toString());
-    	//double heigh=Double.valueOf(map.get("Height").toString());
-    	//right_cen_x=pinx+width/2;    	
-    	right_cen_x=pinx+mod_width/2;
+    	//double pinx=Double.valueOf(map.get("PinX").toString());    	
+    	//double width=Double.valueOf(map.get("Width").toString());       	
+    	//right_cen_x=pinx+mod_width/2;
+    	int temp_x_ul=Integer.valueOf(map.get("X_json").toString());
+    	right_cen_x=temp_x_ul+mod_width;
     	return right_cen_x;
     }
     public double right_cen_y(Map map){
-    	double right_cen_y=0.0;
-    	//double pinx=Double.valueOf(map.get("PinX").toString());
-    	double piny=Double.valueOf(map.get("PinY").toString());
-    	//double width=Double.valueOf(map.get("Width").toString());
-    	//double heigh=Double.valueOf(map.get("Height").toString());
-    	right_cen_y=piny;    	
+    	double right_cen_y=0.0;    	
+    	//double piny=Double.valueOf(map.get("PinY").toString());    	
+    	//right_cen_y=piny;  
+    	int temp_y_ul=Integer.valueOf(map.get("Y_json").toString());
+    	right_cen_y=temp_y_ul+mod_heigh/2;
     	return right_cen_y;
     }
 
