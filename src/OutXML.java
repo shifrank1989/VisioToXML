@@ -19,8 +19,8 @@ import org.omg.CORBA.PUBLIC_MEMBER;
 
 public class OutXML {
 
-	String IN_url="D://page7.xml";
-	String OUT_url="D:\\page7OUT_sc.xml";
+	String IN_url="C:\\Users\\shifrank1989\\Desktop\\out\\page7.xml";
+	String OUT_url="C:\\Users\\shifrank1989\\Desktop\\out\\page7OUT.xml";
 	String temp_ele="shape";
 	int mod_width=210;
 	int mod_heigh=56;
@@ -246,10 +246,12 @@ public class OutXML {
             		String temp_number=String.valueOf(j+1);
             		double loc_x_dou=Double.valueOf((map.get(temp_number+"X").toString()))*x_ratio;
             		double loc_y_dou=Double.valueOf((map.get(temp_number+"Y").toString()))*y_ratio;
-            		System.out.println("ID:"+map.get("ID")+"  begin_x:"+Beg_x_new);
-            		System.out.println("ID:"+map.get("ID")+"  begin_y:"+Beg_y_new);
-            		int loc_x_int=(int)(loc_x_dou+Double.valueOf(Beg_x_new));
-            		int loc_y_int=(int) (loc_y_dou+Double.valueOf(Beg_y_new));
+            		//System.out.println("ID:"+map.get("ID")+"  begin_x:"+Beg_x_new);
+            		//System.out.println("ID:"+map.get("ID")+"  begin_y:"+Beg_y_new);
+            		double Beg_x_new_double=Double.valueOf(Beg_x_new);
+            		double Beg_y_new_double=Double.valueOf(Beg_y_new);
+            		int loc_x_int=(int)loc_x_dou+(int)Beg_x_new_double;
+            		int loc_y_int=(int)loc_y_dou+(int)Beg_y_new_double;
                     //System.out.println("ID:"+map.get("ID"));
             		//System.out.println("loc_x_dou:"+loc_x_dou);
             		//System.out.println("loc_y_dou:"+loc_y_dou);
