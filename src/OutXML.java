@@ -22,6 +22,9 @@ public class OutXML {
 	String IN_url="D://page2.xml";
 	String OUT_url="D:\\page2OUT_sc.xml";
 	String temp_ele="shape";
+	int mod_width=210;
+	int mod_heigh=56;
+			
 	Map map_con=new HashMap();
 	public String get_category(String nameU){
 		String category = "CommonCode";
@@ -46,10 +49,10 @@ public class OutXML {
 	        	keyList.addAll(set);
 	        	if(map.get("Type").equals("Group")){ 
 	        		int child_number=Integer.valueOf(map.get("child_number").toString());
-	        		System.out.println("子节点数:"+child_number);
+	        		//System.out.println("子节点数:"+child_number);
 	        		
 	        		for(int j=0;j<child_number;j++){
-	        			System.out.println("子节点id:"+map.get(String.valueOf(j+1)+"childID").toString());
+	        			//System.out.println("子节点id:"+map.get(String.valueOf(j+1)+"childID").toString());
 	        			if(map.get(String.valueOf(j+1)+"childID").toString().equals(id)){
 	        				father_id=map.get("ID").toString();
 	        			}
@@ -87,12 +90,18 @@ public class OutXML {
         	keyList.addAll(set);
         	if(map.get("Type").equals("Group")){        		
         		Element processElement_chil=new Element("process_element");
-        		position_x=String.valueOf((int)(Double.valueOf(map.get("PinX").toString())-Double.valueOf(map.get("Width").toString())/2));
-        		position_y=String.valueOf((int)(Double.valueOf(map.get("PinY").toString())-Double.valueOf(map.get("Height").toString())/2));
+        		//position_x=String.valueOf((int)(Double.valueOf(map.get("PinX").toString())-Double.valueOf(map.get("Width").toString())/2));
+        		//position_y=String.valueOf((int)(Double.valueOf(map.get("PinY").toString())-Double.valueOf(map.get("Height").toString())/2));
+        		//double position_x_temp=Double.valueOf(map.get("PinX").toString());
+        		//double position_y_temp=Double.valueOf(map.get("PinY").toString());
+        		//position_x=String.valueOf((int)(position_x_temp)-mod_width/2);
+        		//position_y=String.valueOf((int)(position_y_temp)-mod_width/2);
+        		position_x=map.get("X_json").toString();
+        		position_y=map.get("Y_json").toString();
         		int child_number=Integer.valueOf(map.get("child_number").toString());
         		
         		if(child_number==1){
-        			System.out.println("======"+map.get("1"+"childNameU").toString());
+        			//System.out.println("======"+map.get("1"+"childNameU").toString());
         			if(get_category(map.get("1"+"childNameU").toString()).equals("Start")){
         				work=map.get("1"+"childText").toString();
         				category="Start";
@@ -153,6 +162,11 @@ public class OutXML {
                 		}
                 	}
         		}
+        		//
+        		if(map.get("ID").equals("75")){
+        			
+        		}
+        		//
         		processElement_chil.addContent(new Element("key").setText(map.get("ID").toString()));
         		processElement_chil.addContent(new Element("category").setText(category));	
         		processElement_chil.addContent(new Element("background").setText("#ffffcc"));
@@ -226,8 +240,8 @@ public class OutXML {
         		
             	Beg_x_new=get_BeginX_new(begin_direction, BegTrigger);
         		End_x_new=get_EndX_new(arrow_direction, EndTrigger);
-        		Beg_y_new=get_BeginX_new(begin_direction, BegTrigger);
-        		End_y_new=get_EndX_new(arrow_direction, EndTrigger);
+        		Beg_y_new=get_BeginY_new(begin_direction, BegTrigger);
+        		End_y_new=get_EndY_new(arrow_direction, EndTrigger);
         		x_ratio=x_ratio(map.get("BeginX").toString(), map.get("EndX").toString(), Beg_x_new, End_x_new);
         		y_ratio=y_ratio(map.get("BeginY").toString(), map.get("EndY").toString(), Beg_y_new, End_y_new);
         		String loc_str_x;
@@ -258,8 +272,8 @@ public class OutXML {
             		}
             		
             	}
-            	double TxtPinX=Double.parseDouble(map.get("PinX").toString());
-            	double TxtPinY=Double.parseDouble(map.get("PinY").toString());
+            	double TxtPinX=Double.parseDouble(map.get("TxtPinX").toString());
+            	double TxtPinY=Double.parseDouble(map.get("TxtPinY").toString());
             	text.addContent(new Element("position_x").setText(String.valueOf((int)TxtPinX)));
             	text.addContent(new Element("position_y").setText(String.valueOf((int)TxtPinY)));
             	/*processLine_chil.addContent(new Element("key").setText(map.get("ID").toString()));            
@@ -300,6 +314,7 @@ public class OutXML {
 	        	List<String> keyList = new ArrayList<String>();
 	        	keyList.addAll(set);
 	        	if(map.get("ID").equals(fatherid)){
+	        		
 	        		Begin_x_new=String.valueOf(up_cen_x(map));
 	        	}
 			}
@@ -405,8 +420,9 @@ public class OutXML {
     	}
     	return End_x_new;
     }
-    public String get_BeginY_new(String direction,String fatherid){
-    	String Begin_y_new = null;
+    
+    public String get_EndY_new(String direction,String fatherid){
+    	String End_y_new = null;
     	if(direction.equals("up")){
     		Read readXML=new Read();
 			List xList=readXML.xmlData(IN_url);
@@ -416,7 +432,8 @@ public class OutXML {
 	        	List<String> keyList = new ArrayList<String>();
 	        	keyList.addAll(set);
 	        	if(map.get("ID").equals(fatherid)){
-	        		Begin_y_new=String.valueOf(up_cen_y(map));
+	        		int diff_y=(mod_heigh/2)*(Integer.valueOf(map.get("child_number").toString())-1);	
+	        		End_y_new=String.valueOf(down_cen_y(map)+diff_y);
 	        	}
 			}
     	}else if(direction.equals("down")){
@@ -428,7 +445,70 @@ public class OutXML {
 	        	List<String> keyList = new ArrayList<String>();
 	        	keyList.addAll(set);
 	        	if(map.get("ID").equals(fatherid)){
-	        		Begin_y_new=String.valueOf(down_cen_y(map));
+	        		int diff_y=(mod_heigh/2)*(Integer.valueOf(map.get("child_number").toString())-1);	
+	        		End_y_new=String.valueOf(up_cen_y(map)-diff_y);
+	        		
+	        	}
+			}
+    	}
+    	else if(direction.equals("right")){
+    		Read readXML=new Read();
+			List xList=readXML.xmlData(IN_url);
+			for(int i=0;i<xList.size();i++){
+				Map<String, Object> map = (Map<String, Object>) xList.get(i);
+	        	Set<String> set = map.keySet();
+	        	List<String> keyList = new ArrayList<String>();
+	        	keyList.addAll(set);
+	        	if(map.get("ID").equals(fatherid)){
+	        		End_y_new=String.valueOf(left_cen_y(map));
+	        		
+	        	}
+			}
+    	}
+    	else if(direction.equals("left")){
+    		Read readXML=new Read();
+			List xList=readXML.xmlData(IN_url);
+			for(int i=0;i<xList.size();i++){
+				Map<String, Object> map = (Map<String, Object>) xList.get(i);
+	        	Set<String> set = map.keySet();
+	        	List<String> keyList = new ArrayList<String>();
+	        	keyList.addAll(set);
+	        	if(map.get("ID").equals(fatherid)){
+	        		End_y_new=String.valueOf(right_cen_y(map));
+	        		//left_cen_y(map);
+	        	}
+			}
+    	}
+    	return End_y_new;
+    }
+    
+    
+    public String get_BeginY_new(String direction,String fatherid){
+    	String Begin_y_new = null;
+    	if(direction.equals("up")){
+    		Read readXML=new Read();
+			List xList=readXML.xmlData(IN_url);
+			for(int i=0;i<xList.size();i++){
+				Map<String, Object> map = (Map<String, Object>) xList.get(i);
+	        	Set<String> set = map.keySet();
+	        	List<String> keyList = new ArrayList<String>();
+	        	keyList.addAll(set);
+	        	if(map.get("ID").equals(fatherid)){
+	        		int diff_y=(mod_heigh/2)*(Integer.valueOf(map.get("child_number").toString())-1);	        		
+	        		Begin_y_new=String.valueOf(up_cen_y(map)-diff_y);
+	        	}
+			}
+    	}else if(direction.equals("down")){
+    		Read readXML=new Read();
+			List xList=readXML.xmlData(IN_url);
+			for(int i=0;i<xList.size();i++){
+				Map<String, Object> map = (Map<String, Object>) xList.get(i);
+	        	Set<String> set = map.keySet();
+	        	List<String> keyList = new ArrayList<String>();
+	        	keyList.addAll(set);
+	        	if(map.get("ID").equals(fatherid)){
+	        		int diff_y=(mod_heigh/2)*(Integer.valueOf(map.get("child_number").toString())-1);	
+	        		Begin_y_new=String.valueOf(down_cen_y(map)+diff_y);
 	        		
 	        	}
 			}
@@ -475,11 +555,9 @@ public class OutXML {
     }
     public double up_cen_x(Map map){
     	double up_cen_x=0.0;
-    	double pinx=Double.valueOf(map.get("PinX").toString());
-    	//double piny=Double.valueOf(map.get("PinY").toString());
-    	//double width=Double.valueOf(map.get("Width").toString());
-    	//double heigh=Double.valueOf(map.get("Height").toString());
-    	up_cen_x=pinx;    	
+    	double pinx=Double.valueOf(map.get("PinX").toString());    	
+    	up_cen_x=pinx;  
+    	
     	return up_cen_x;
     }
     public double up_cen_y(Map map){
@@ -488,7 +566,8 @@ public class OutXML {
     	double piny=Double.valueOf(map.get("PinY").toString());
     	//double width=Double.valueOf(map.get("Width").toString());
     	double heigh=Double.valueOf(map.get("Height").toString());
-    	up_cen_y=piny-heigh/2;    	
+    	//up_cen_y=piny-heigh/2;    	
+    	up_cen_y=piny-mod_heigh/2;
     	return up_cen_y;
     }
     public double down_cen_x(Map map){
@@ -506,7 +585,8 @@ public class OutXML {
     	double piny=Double.valueOf(map.get("PinY").toString());
     	//double width=Double.valueOf(map.get("Width").toString());
     	double heigh=Double.valueOf(map.get("Height").toString());
-    	down_cen_y=piny+heigh/2;    	
+    	//down_cen_y=piny+heigh/2;    	
+    	down_cen_y=piny+mod_heigh/2;
     	return down_cen_y;
     }
     public double left_cen_x(Map map){
@@ -515,7 +595,8 @@ public class OutXML {
     	//double piny=Double.valueOf(map.get("PinY").toString());
     	double width=Double.valueOf(map.get("Width").toString());
     	//double heigh=Double.valueOf(map.get("Height").toString());
-    	left_cen_x=pinx-width/2;    	
+    	//left_cen_x=pinx-width/2;    	
+    	left_cen_x=pinx-mod_width/2;
     	return left_cen_x;
     }
     public double left_cen_y(Map map){
@@ -534,7 +615,8 @@ public class OutXML {
     	//System.out.println("id:"+map.get("ID"));
     	double width=Double.valueOf(map.get("Width").toString());
     	//double heigh=Double.valueOf(map.get("Height").toString());
-    	right_cen_x=pinx+width/2;    	
+    	//right_cen_x=pinx+width/2;    	
+    	right_cen_x=pinx+mod_width/2;
     	return right_cen_x;
     }
     public double right_cen_y(Map map){
